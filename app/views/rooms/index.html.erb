@@ -1,0 +1,48 @@
+<div class="search-header">
+  <h1>Potepan Shareで<br>まだ体験したことのない旅をしよう</h1>
+  <%= search_form_for @q, url: rooms_path, method: :get do |f| %>
+    <div class="search-form">
+      <!-- エリア選択 -->
+      <%= f.label :address_eq, 'エリア検索' %>
+      <%= f.select :address_eq, [['東京', '東京'], ['大阪', '大阪'], ['京都', '京都'], ['札幌', '札幌']], prompt: 'エリアを選択' %>
+
+      <!-- フリーワード検索 -->
+      <%= f.text_field :name_or_description_cont, placeholder: 'キーワード名を入力' %>
+
+      <!-- 検索ボタン -->
+      <%= f.submit '検索', class: 'btn btn-primary' %>
+    </div>
+  <% end %>
+</div>
+
+<h2>
+  <% if @rooms.any? %>
+    <%= @rooms.count %> 件が見つかりました。
+  <% else %>
+    <% if params[:q].present? %>
+      該当する施設が見つかりませんでした。
+    <% else %>
+      検索条件を入力してください。
+    <% end %>
+  <% end %>
+</h2>
+
+<div class="room-list">
+  <% @rooms.each do |room| %>
+    <div class="room-card">
+      <!-- 画像表示 -->
+      <% if room.image.attached? %> <!-- ActiveStorageの場合 -->
+        <%= image_tag room.image, alt: room.name, class: 'room-image' %>
+      <% else %> <!-- 画像がない場合のデフォルト画像 -->
+        <%= image_tag 'default_hotel_image.png', alt: 'デフォルト画像', class: 'room-image' %>
+      <% end %>
+
+      <!-- 施設情報 -->
+      <h3><%= room.name %></h3>
+      <p><%= room.address %></p>
+      <p><%= room.description.truncate(100) %></p>
+      <p>¥<%= number_to_currency(room.price, unit: '', precision: 0) %>〜</p>
+      <%= link_to '詳細はこちら', room_path(room), class: 'btn-detail' %>
+    </div>
+  <% end %>
+</div>

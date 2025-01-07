@@ -1,0 +1,7 @@
+<h1>予約確認ページ</h1>
+<p>チェックイン日: <%= @reservation.check_in %></p>
+<p>チェックアウト日: <%= @reservation.check_out %></p>
+<p>宿泊日数: <%= (@reservation.check_out - @reservation.check_in).to_i %>日</p>
+<p>人数: <%= @reservation.number_of_guests %></p>
+<p>支払い金額: <%= @reservation.total_price %>円</p>
+<%= link_to '予約一覧に戻る', reservations_path %>

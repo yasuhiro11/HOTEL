@@ -1,0 +1,6 @@
+<h1>施設詳細ページ<%= @room.name %></h1>
+<%= image_tag @room.image if @room.image.present? %>
+<p><%= @room.description %></p>
+<p>料金: <%= @room.price %>円/日</p>
+<p>住所: <%= @room.address %></p>
+<%= link_to '戻る', rooms_path %>

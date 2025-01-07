@@ -1,0 +1,7 @@
+<h1>プロフィール編集</h1>
+<%= simple_form_for(current_user, url: profile_update_path, method: :put, html: { multipart: true }) do |f| %>
+  <%= f.input :avatar, as: :file, label: "プロフィール画像" %>
+  <%= f.input :name, label: "名前" %>
+  <%= f.input :profile, label: "自己紹介", as: :textarea %>
+  <%= f.button :submit, "更新する" %>
+<% end %>
