@@ -1,0 +1,45 @@
+<h1>予約内容の確認</h1>
+
+<div class="reservation-summary">
+  <table class="table">
+    <tbody>
+      <tr>
+        <th>チェックイン</th>
+        <td><%= @reservation.check_in.strftime("%Y/%m/%d") if @reservation.check_in.present? %></td>
+      </tr>
+      <tr>
+        <th>チェックアウト</th>
+        <td><%= @reservation.check_out.strftime("%Y/%m/%d") if @reservation.check_out.present? %></td>
+      </tr>
+      <tr>
+        <th>日数</th>
+        <td><%= (@reservation.check_out - @reservation.check_in).to_i if @reservation.check_in.present? && @reservation.check_out.present? %>日</td>
+      </tr>
+      <tr>
+        <th>人数</th>
+        <td><%= @reservation.number_of_guests %>人</td>
+      </tr>
+      <tr>
+        <th>合計料金</th>
+        <td>
+          <% if @reservation.check_in.present? && @reservation.check_out.present? %>
+            <%= number_to_currency(@room.price * (@reservation.check_out - @reservation.check_in).to_i * @reservation.number_of_guests, unit: "¥", precision: 0) %>
+          <% else %>
+            未入力
+          <% end %>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <%= form_with model: [@room, @reservation], url: room_reservations_path(@room), method: :post, local: true do |form| %>
+    <%= form.hidden_field :check_in, value: @reservation.check_in %>
+    <%= form.hidden_field :check_out, value: @reservation.check_out %>
+    <%= form.hidden_field :number_of_guests, value: @reservation.number_of_guests %>
+    <%= form.hidden_field :step, value: 'confirm' %>
+
+    <%= form.submit '確定', class: 'btn btn-primary' %>
+  <% end %>
+
+  <%= link_to '戻る', new_room_reservation_path(@room), class: 'btn btn-secondary' %>
+</div>

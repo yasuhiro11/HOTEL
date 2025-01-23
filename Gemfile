@@ -60,4 +60,8 @@ gem 'mutex_m'
 gem 'devise'
 gem 'ransack', group: :default
 gem 'jquery-rails'
+gem 'flatpickr'
+gem 'mini_magick'
+gem 'image_processing', '~> 1.2'
 gem 'psych', '~> 3.1'
+gem 'simple_form'

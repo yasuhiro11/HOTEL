@@ -1,0 +1,45 @@
+<h1>施設の新規登録</h1>
+
+<%= form_with(model: @facility, local: true) do |form| %>
+  <% if @facility.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@facility.errors.count, "エラー") %>が発生しました:</h2>
+      <ul>
+        <% @facility.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :name, "施設名" %>
+    <%= form.text_field :name %>
+  </div>
+
+  <div class="field">
+    <%= form.label :description, "施設詳細" %>
+    <%= form.text_area :description %>
+  </div>
+
+  <div class="field">
+    <%= form.label :price, "料金" %>
+    <%= form.number_field :price, placeholder: "一日あたりの料金を入力" %>
+  </div>
+
+  <div class="field">
+    <%= form.label :location, "住所" %>
+    <%= form.text_field :location, placeholder: "住所を入力" %>
+  </div>
+
+  <div class="field">
+    <%= form.label :image, "施設画像" %>
+    <%= form.file_field :image %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit "保存" %>
+  </div>
+
+  <%= link_to "キャンセル", root_path, class: "cancel-button" %>
+<% end %>

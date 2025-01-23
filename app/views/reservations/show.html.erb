@@ -1,7 +1,48 @@
-<h1>予約確認ページ</h1>
-<p>チェックイン日: <%= @reservation.check_in %></p>
-<p>チェックアウト日: <%= @reservation.check_out %></p>
-<p>宿泊日数: <%= (@reservation.check_out - @reservation.check_in).to_i %>日</p>
-<p>人数: <%= @reservation.number_of_guests %></p>
-<p>支払い金額: <%= @reservation.total_price %>円</p>
-<%= link_to '予約一覧に戻る', reservations_path %>
+<h1>予約内容の確認</h1>
+
+<% if flash[:alert].present? %>
+  <div class="alert alert-danger">
+    <%= flash[:alert] %>
+  </div>
+<% end %>
+
+<div class="reservation-summary">
+  <table class="table">
+    <tbody>
+      <tr>
+        <th>チェックイン</th>
+        <td><%= @reservation.check_in.present? ? @reservation.check_in.strftime("%Y/%m/%d") : "未入力" %></td>
+      </tr>
+      <tr>
+        <th>チェックアウト</th>
+        <td><%= @reservation.check_out.present? ? @reservation.check_out.strftime("%Y/%m/%d") : "未入力" %></td>
+      </tr>
+      <tr>
+        <th>日数</th>
+        <td><%= @reservation.check_in.present? && @reservation.check_out.present? ? (@reservation.check_out - @reservation.check_in).to_i : "未入力" %>日</td>
+      </tr>
+      <tr>
+        <th>人数</th>
+        <td><%= @reservation.number_of_guests %>人</td>
+      </tr>
+      <tr>
+        <th>お支払い金額</th>
+        <td>
+          <% if @reservation.check_in.present? && @reservation.check_out.present? %>
+            <%= number_to_currency(@room.price * (@reservation.check_out - @reservation.check_in).to_i * @reservation.number_of_guests, unit: "¥", precision: 0) %>
+          <% else %>
+            未入力
+          <% end %>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p>上記内容で正しければ「確定」ボタンを押してください。</p>
+
+  <%= form_with model: [@room, @reservation], url: room_reservations_path(@room), method: :post, local: true do |f| %>
+    <%= f.submit '予約を確定', class: 'btn btn-primary' %>
+  <% end %>
+
+  <%= link_to 'キャンセル', room_path(@room), class: 'btn btn-secondary' %>
+</div>

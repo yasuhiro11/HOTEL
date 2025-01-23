@@ -1,0 +1,50 @@
+<h1>予約の作成</h1>
+
+<% if @facility %>
+  <div class="facility-details">
+    <h2>施設情報</h2>
+    <p><strong>施設名:</strong> <%= @facility.name %></p>
+    <p><strong>詳細:</strong> <%= @facility.description %></p>
+    <p><strong>住所:</strong> <%= @facility.location %></p>
+    <p><strong>料金:</strong> <%= number_to_currency(@facility.price, unit: "￥", precision: 0, delimiter: ",") %></p>
+  </div>
+<% else %>
+  <p>施設情報が見つかりません。</p>
+<% end %>
+
+<%= form_with(model: @booking, local: true) do |form| %>
+  <% if @booking.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@booking.errors.count, "エラー") %>が発生しました:</h2>
+      <ul>
+        <% @booking.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :facility_id, "施設" %>
+    <%= form.collection_select :facility_id, Facility.all, :id, :name, prompt: "施設を選択", selected: @facility&.id %>
+  </div>
+
+  <div class="field">
+    <%= form.label :start_date, "開始日" %>
+    <%= form.date_field :start_date %>
+  </div>
+
+  <div class="field">
+    <%= form.label :end_date, "終了日" %>
+    <%= form.date_field :end_date %>
+  </div>
+
+  <div class="field">
+  <%= form.label :number_of_people, "人数" %>
+  <%= form.number_field :number_of_people, min: 1, value: 1 %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit "予約作成" %>
+  </div>
+<% end %>

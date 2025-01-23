@@ -1,0 +1,8 @@
+ja:
+  devise:
+    failure:
+      invalid: "メールアドレスまたはパスワードが正しくありません"
+    registrations:
+      user:
+        email:
+          taken: "このメールアドレスは既に登録されています"

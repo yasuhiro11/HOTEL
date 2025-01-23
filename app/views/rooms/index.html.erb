@@ -2,13 +2,9 @@
   <h1>Potepan Shareで<br>まだ体験したことのない旅をしよう</h1>
   <%= search_form_for @q, url: rooms_path, method: :get do |f| %>
     <div class="search-form">
-      <!-- エリア選択 -->
-      <%= f.label :address_eq, 'エリア検索' %>
-      <%= f.select :address_eq, [['東京', '東京'], ['大阪', '大阪'], ['京都', '京都'], ['札幌', '札幌']], prompt: 'エリアを選択' %>
-
-      <!-- フリーワード検索 -->
-      <%= f.text_field :name_or_description_cont, placeholder: 'キーワード名を入力' %>
-
+      <!-- エリア検索 -->
+      <%= f.text_field :address_cont, placeholder: 'エリアを入力 (例: 東京、大阪、京都、札幌)', class: 'form-control', style: 'width: 300px;' %>
+  
       <!-- 検索ボタン -->
       <%= f.submit '検索', class: 'btn btn-primary' %>
     </div>

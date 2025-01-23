@@ -1,8 +1,0 @@
-<h1>予約フォーム</h1>
-<%= simple_form_for [@room, @reservation] do |f| %>
-  <%= f.input :check_in, as: :date %>
-  <%= f.input :check_out, as: :date %>
-  <%= f.input :number_of_guests, label: '人数' %>
-  <%= f.button :submit, '予約する' %>
-<% end %>
-<%= link_to '施設詳細に戻る', room_path(@room) %>

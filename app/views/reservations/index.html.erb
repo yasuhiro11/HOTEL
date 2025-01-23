@@ -1,14 +1,40 @@
-<h1>予約一覧</h1>
-<ul>
-  <% @reservations.each do |reservation| %>
-    <li>
-      <%= image_tag reservation.room.image if reservation.room.image.present? %>
-      <p>施設名: <%= link_to reservation.room.name, room_path(reservation.room) %></p>
-      <p>紹介文: <%= reservation.room.description %></p>
-      <p>合計料金: <%= reservation.total_price %>円</p>
-      <p>チェックイン日: <%= reservation.check_in %></p>
-      <p>チェックアウト日: <%= reservation.check_out %></p>
-      <p>予約確定日時: <%= reservation.confirmed_at.strftime('%Y/%m/%d %H:%M') if reservation.confirmed_at %></p>
-    </li>
-  <% end %>
-</ul>
+<h1>予約済み一覧</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>画像</th>
+      <th>施設名</th>
+      <th>紹介文</th>
+      <th>合計料金</th>
+      <th>チェックイン</th>
+      <th>チェックアウト</th>
+      <th>予約確定日時</th>
+      <th>操作</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @reservations.each do |reservation| %>
+      <tr>
+        <td>
+          <%= image_tag reservation.room.image.attached? ? url_for(reservation.room.image) : 'default_hotel_image.png' %>
+        </td>
+        <td>
+          <%= link_to reservation.room.name, room_path(reservation.room), class: "facility-name" %>
+        </td>
+        <td><%= reservation.room.description %></td>
+        <td>¥<%= number_with_delimiter(reservation.total_price) %></td>
+        <td><%= reservation.check_in %></td>
+        <td><%= reservation.check_out %></td>
+        <td><%= reservation.created_at.strftime("%Y/%m/%d %H:%M") %></td>
+        <td>
+          <%= link_to '削除', reservation_path(reservation), method: :delete, data: { confirm: '本当に削除しますか？' }, class: 'btn-danger' %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<div class="footer">
+  Copyright © Potepan Share 2025 All rights reserved
+</div>

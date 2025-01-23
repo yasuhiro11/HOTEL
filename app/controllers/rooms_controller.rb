@@ -4,10 +4,13 @@ class RoomsController < ApplicationController
 
   def index
     @q = Room.ransack(params[:q]) # Ransack 検索オブジェクトを作成
-    @rooms = params[:q].present? ? @q.result.order(created_at: :desc) : []
+    @rooms = @q.result.order(created_at: :desc) # 全ての部屋を表示
   end
 
-  def show; end
+  def show
+    @room = Room.find(params[:id]) # 部屋の情報を取得
+    @reservation = @room.reservations.build # 部屋に関連する新しい予約を作成
+  end
 
   def new
     @room = Room.new
