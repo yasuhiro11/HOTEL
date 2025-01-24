@@ -13,10 +13,10 @@ class User < ApplicationRecord
        # Validations
        validates :name, presence: true
        validates :email, presence: true, uniqueness: true
-       validates :bio, length: { maximum: 300 }, allow_blank: true # 必須ではなく空を許可
+       validates :bio, length: { maximum: 300 }, allow_blank: true
      
        # Custom validation for current password
-       validate :validate_current_password, if: :password_present?
+       validate :validate_current_password, if: :current_password_required?
      
        # Custom update method to bypass password validation
        def update_without_password(params)
@@ -28,9 +28,9 @@ class User < ApplicationRecord
      
        private
      
-       # Check if password is present
-       def password_present?
-         password.present?
+       # Check if current password validation is required
+       def current_password_required?
+         persisted? && current_password.present? && password.present?
        end
      
        # Validate the current password

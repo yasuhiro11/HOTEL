@@ -47,7 +47,7 @@ ActiveRecord::Schema.define(version: 2025_01_21_080056) do
     t.date "end_date"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.integer "number_of_people"
+    t.integer "number_of_people", default: 1, null: false
     t.index ["facility_id"], name: "index_bookings_on_facility_id"
     t.index ["user_id"], name: "index_bookings_on_user_id"
   end
@@ -90,12 +90,12 @@ ActiveRecord::Schema.define(version: 2025_01_21_080056) do
     t.string "encrypted_password", default: "", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.string "name"
-    t.text "profile"
-    t.string "avatar"
     t.string "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
+    t.string "name"
+    t.text "profile"
+    t.string "avatar"
     t.string "username"
     t.text "bio"
     t.text "introduction"
