@@ -10,9 +10,10 @@ class ApplicationController < ActionController::Base
 
   # Deviseで許可するパラメーターを設定
   def configure_permitted_parameters
-    # サインアップ時に username と avatar を許可
-    devise_parameter_sanitizer.permit(:sign_up, keys: [:username, :avatar])
-    # アカウント更新時に username と avatar を許可
-    devise_parameter_sanitizer.permit(:account_update, keys: [:username, :avatar])
+    # サインアップ時に name, username, avatar を許可
+    devise_parameter_sanitizer.permit(:sign_up, keys: [:name, :username, :avatar])
+
+    # アカウント更新時に name, username, bio, avatar を許可
+    devise_parameter_sanitizer.permit(:account_update, keys: [:name, :username, :bio, :avatar])
   end
 end
