@@ -2,7 +2,11 @@ ja:
   devise:
     failure:
       invalid: "メールアドレスまたはパスワードが正しくありません"
+      already_authenticated: "ログインしました"
     registrations:
       user:
         email:
           taken: "このメールアドレスは既に登録されています"
+      signed_up: "アカウント登録が完了しました"
+    sessions:
+      signed_out: "ログアウトしました"

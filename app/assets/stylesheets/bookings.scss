@@ -1,3 +1,123 @@
-// Place all the styles related to the Bookings controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: https://sass-lang.com/
+// 全体のスタイル
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    margin: 20px;
+    color: #333;
+    background-color: #f8f9fa; // 背景色を薄いグレーに調整
+  }
+  
+  // ヘッダーのスタイル
+  h1 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+    color: #0056b3;
+    text-align: center; // 中央揃え
+  }
+  
+  h2 {
+    font-size: 1.5rem;
+    margin-top: 30px;
+    color: #007bff;
+  }
+  
+  // 施設情報セクション
+  .facility-details {
+    width: 100%;
+    max-width: 600px; // フォームと同じ最大幅を設定
+    margin: 0 auto 20px; // 中央揃え
+    padding: 20px;
+    background-color: #fff; // 白背景
+    border: 1px solid #ddd; // 枠線
+    border-radius: 8px; // 角丸
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); // 軽い影
+  
+    p {
+      margin: 5px 0;
+  
+      strong {
+        color: #555;
+      }
+    }
+  }
+  
+  // エラーメッセージ
+  #error_explanation {
+    background-color: #ffcccc;
+    border: 1px solid #ff6666;
+    border-radius: 8px;
+    padding: 10px;
+    margin-bottom: 20px;
+  
+    h2 {
+      color: #cc0000;
+      font-size: 1.2rem;
+      margin-bottom: 15px;
+    }
+  
+    ul {
+      padding-left: 20px;
+      margin: 10px 0;
+    }
+  
+    li {
+      color: #cc0000;
+      font-size: 0.9rem;
+    }
+  }
+  
+  // フォーム全体
+  form {
+    margin: 0 auto; // フォームを中央寄せ
+    width: 100%;
+    max-width: 600px; // フォームの最大幅を設定
+    background-color: #fff; // 白背景
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); // 軽い影
+  
+    .field {
+      margin-bottom: 15px;
+  
+      label {
+        display: block;
+        font-weight: bold;
+        margin-bottom: 5px;
+        color: #333;
+      }
+  
+      input,
+      select {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        font-size: 1rem;
+  
+        &:focus {
+          outline: none;
+          border-color: #007bff;
+          box-shadow: 0 0 3px #007bff;
+        }
+      }
+    }
+  
+    .actions {
+      text-align: center; // ボタンを中央揃え
+  
+      input[type="submit"] {
+        background-color: #007bff;
+        color: #fff;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 1rem;
+  
+        &:hover {
+          background-color: #0056b3;
+        }
+      }
+    }
+  }

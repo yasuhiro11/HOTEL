@@ -8,8 +8,14 @@ class RoomsController < ApplicationController
   end
 
   def show
-    @room = Room.find(params[:id]) # 部屋の情報を取得
-    @reservation = @room.reservations.build # 部屋に関連する新しい予約を作成
+    @room = Room.find_by(id: params[:id])
+
+    if @room.nil?
+      redirect_to rooms_path, alert: '該当する部屋が見つかりませんでした。'
+      return
+    end
+
+    @reservation = @room.reservations.build # 予約フォーム用のオブジェクトを用意
   end
 
   def new
@@ -38,4 +44,3 @@ class RoomsController < ApplicationController
     params.require(:room).permit(:name, :description, :price, :address, :image)
   end
 end
-

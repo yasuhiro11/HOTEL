@@ -12,39 +12,28 @@
   <p>施設情報が見つかりません。</p>
 <% end %>
 
-<%= form_with(model: @booking, local: true) do |form| %>
-  <% if @booking.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@booking.errors.count, "エラー") %>が発生しました:</h2>
-      <ul>
-        <% @booking.errors.full_messages.each do |message| %>
-          <li><%= message %></li>
-        <% end %>
-      </ul>
-    </div>
-  <% end %>
-
-  <div class="field">
-    <%= form.label :facility_id, "施設" %>
-    <%= form.collection_select :facility_id, Facility.all, :id, :name, prompt: "施設を選択", selected: @facility&.id %>
-  </div>
+<%= form_with(model: @booking, url: bookings_path, method: :post, local: true) do |form| %>
+  
+  <!-- 確実に facility_id を送信 -->
+  <%= form.hidden_field :facility_id, value: @facility&.id %>
 
   <div class="field">
     <%= form.label :start_date, "開始日" %>
-    <%= form.date_field :start_date %>
+    <%= form.date_field :start_date, required: true %>
   </div>
 
   <div class="field">
     <%= form.label :end_date, "終了日" %>
-    <%= form.date_field :end_date %>
+    <%= form.date_field :end_date, required: true %>
   </div>
 
   <div class="field">
-  <%= form.label :number_of_people, "人数" %>
-  <%= form.number_field :number_of_people, min: 1, value: 1 %>
+    <%= form.label :number_of_people, "人数" %>
+    <%= form.number_field :number_of_people, min: 1, value: 1, required: true %>
   </div>
 
   <div class="actions">
-    <%= form.submit "予約作成" %>
+    <%= form.submit "予約する", class: "btn btn-primary" %>
   </div>
+
 <% end %>
