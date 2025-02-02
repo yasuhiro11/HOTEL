@@ -23,14 +23,23 @@ Rails.application.routes.draw do
   end
 
   # 施設関連のルート
-  resources :facilities, only: [:new, :create, :index, :destroy]
-  get 'registered_facilities', to: 'facilities#index', as: 'registered_facilities'
+  resources :facilities, except: [:show] do
+    get :registered, on: :collection
+  end
 
-  # 予約関連のルート
-  resources :reservations, only: [:index, :destroy]
+  # 予約関連のルート（showを追加）
+  resources :reservations, only: [:index, :show, :destroy, :create, :update] do
+    member do
+      get :confirm # 確認ページ
+    end
+  end
+  
+  # 予約一覧用のルーティングを追加
+  resources :reservations, only: [:index, :show, :destroy]
+
 
   # Booking のルートを追加
-  resources :bookings, only: [:new, :create]
+  resources :bookings, only: [:new, :create, :index]
 
   # Devise のサインアウトルート
   devise_scope :user do
