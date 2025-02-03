@@ -9,25 +9,10 @@ class FacilitiesController < ApplicationController
 
   def create
     @facility = Facility.new(facility_params)
-
+  
     if @facility.save
-      # 作成された施設に紐づくデフォルトの部屋を取得
-      room = Room.find_by(facility_id: @facility.id)
-      if room
-        # 予約を自動生成
-        reservation = Reservation.create!(
-          room_id: room.id,
-          user_id: current_user.id, # 必ずログイン中のユーザーがいる前提
-          check_in: Date.today, # デフォルトのチェックイン日を設定
-          check_out: Date.today + 1.day, # デフォルトのチェックアウト日を設定
-          number_of_guests: 1 # デフォルトの人数
-        )
-        # 予約内容の確認ページにリダイレクト
-        redirect_to reservation_path(reservation), notice: '施設が作成されました。予約内容をご確認ください。'
-      else
-        flash[:alert] = 'デフォルトの部屋が見つかりませんでした。'
-        redirect_to facilities_path
-      end
+      flash[:notice] = '施設が作成されました。'
+      redirect_to facilities_path # 施設一覧画面にリダイレクト
     else
       flash.now[:alert] = @facility.errors.full_messages.join(', ')
       render :new, status: :unprocessable_entity
