@@ -3,7 +3,7 @@
   <%= search_form_for @q, url: rooms_path, method: :get do |f| %>
     <div class="search-form">
       <!-- エリア検索 -->
-      <%= f.text_field :address_cont, placeholder: 'エリアを入力 (例: 東京、大阪、京都、札幌)', class: 'form-control', style: 'width: 300px;' %>
+      <%= f.text_field :address_cont, placeholder: 'エリアを入力 (例: 東京、大阪、京都、札幌)', class: 'form-control' %>
   
       <!-- 検索ボタン -->
       <%= f.submit '検索', class: 'btn btn-primary' %>
