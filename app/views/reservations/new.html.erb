@@ -1,0 +1,67 @@
+<h1>予約作成</h1>
+<div class="room-detail">
+  <%= link_to '戻る', rooms_path, class: 'back-link' %>
+
+  <div class="room-header">
+    <h1 class="room-name"><%= @room.name %></h1>
+    <p class="room-address"><%= @room.address %></p>
+    <p class="room-price"><%= number_to_currency(@room.price, unit: "¥", precision: 0) %>〜</p>
+  </div>
+
+  <div class="room-content">
+    <%= image_tag @room.image, class: 'room-image' if @room.image.present? %>
+    <p class="room-description"><%= @room.description %></p>
+  </div>
+
+  <div class="reservation-form">
+    <%= form_with model: @reservation, url: room_reservations_path(@room), method: :post, local: true do |form| %>
+
+      <div class="form-group">
+        <%= form.label :check_in, 'チェックイン' %>
+        <%= form.date_field :check_in, id: 'check-in', class: 'form-control' %>
+      </div>
+
+      <div class="form-group">
+        <%= form.label :check_out, 'チェックアウト' %>
+        <%= form.date_field :check_out, id: 'check-out', class: 'form-control' %>
+      </div>
+
+      <div class="form-group">
+        <%= form.label :number_of_guests, '人数' %>
+        <%= form.number_field :number_of_guests, class: 'form-control', min: 1 %>
+      </div>
+
+      <!-- 予約情報を予約確認ページへ送るための hidden_field -->
+      <%= form.hidden_field :step, value: 'confirm' %>
+
+      <%= form.submit '予約をする', class: 'btn btn-primary' %>
+    <% end %>
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const checkInInput = document.getElementById('check-in');
+    const checkOutInput = document.getElementById('check-out');
+
+    checkInInput.addEventListener('change', () => {
+      const checkInDate = new Date(checkInInput.value);
+      const checkOutDate = new Date(checkOutInput.value);
+
+      if (checkOutInput.value && checkInDate > checkOutDate) {
+        alert('チェックイン日はチェックアウト日より前の日付を選択してください。');
+        checkInInput.value = '';
+      }
+    });
+
+    checkOutInput.addEventListener('change', () => {
+      const checkInDate = new Date(checkInInput.value);
+      const checkOutDate = new Date(checkOutInput.value);
+
+      if (checkInInput.value && checkInDate > checkOutDate) {
+        alert('チェックアウト日はチェックイン日より後の日付を選択してください。');
+        checkOutInput.value = '';
+      }
+    });
+  });
+</script>

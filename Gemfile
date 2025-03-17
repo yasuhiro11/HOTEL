@@ -4,9 +4,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby '3.3.3'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails', branch: 'main'
-gem 'rails', '~> 6.1.3', '>= 6.1.3.2'
-# Use sqlite3 as the database for Active Record
-gem 'sqlite3', '~> 1.4'
+gem 'rails', '= 6.1.3.2'
 # Use Puma as the app server
 gem 'puma', '~> 5.0'
 # Use SCSS for stylesheets
@@ -17,18 +15,17 @@ gem 'webpacker', '~> 5.0'
 gem 'turbolinks', '~> 5'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.7'
-# Use Redis adapter to run Action Cable in production
-# gem 'redis', '~> 4.0'
-# Use Active Model has_secure_password
-# gem 'bcrypt', '~> 3.1.7'
-
-# Use Active Storage variant
-# gem 'image_processing', '~> 1.2'
-
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.4.4', require: false
 
+# 本番環境（Heroku）用のデータベース設定
+group :production do
+  gem 'pg'  # PostgreSQLを本番環境（Heroku）用に追加
+end
+
+# 開発環境とテスト環境ではSQLite3を使用
 group :development, :test do
+  gem 'sqlite3', '~> 1.4'
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
 end
@@ -54,3 +51,20 @@ end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
+
+# `net-pop` の依存関係エラーを防ぐために追加
+gem 'net-protocol', '>= 0.2.2'
+
+# その他のGem
+gem 'base64'
+gem 'bigdecimal'
+gem 'mutex_m'
+gem 'devise'
+gem 'ransack', group: :default
+gem 'jquery-rails'
+gem 'flatpickr'
+gem 'mini_magick'
+gem 'image_processing', '~> 1.2'
+gem 'psych', '~> 3.1'
+gem 'simple_form'
+gem 'net-pop', '>= 0.1.2'

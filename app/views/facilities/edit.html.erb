@@ -1,0 +1,35 @@
+<div class="container mx-auto mt-10 max-w-3xl">
+  <h1 class="text-2xl font-bold text-center mb-6">施設情報の編集</h1>
+
+  <%= form_with model: @facility, local: true, class: "space-y-6" do |form| %>
+    <div>
+      <%= form.label :name, "施設名", class: "block text-sm font-medium text-gray-700" %>
+      <%= form.text_field :name, class: "mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm", placeholder: "ルーム名を入力" %>
+    </div>
+
+    <div>
+      <%= form.label :description, "施設詳細", class: "block text-sm font-medium text-gray-700" %>
+      <%= form.text_area :description, class: "mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm", placeholder: "施設詳細を入力" %>
+    </div>
+
+    <div>
+      <%= form.label :price, "料金", class: "block text-sm font-medium text-gray-700" %>
+      <%= form.number_field :price, class: "mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm", placeholder: "一日あたりの料金を入力" %>
+    </div>
+
+    <div>
+      <%= form.label :location, "住所", class: "block text-sm font-medium text-gray-700" %>
+      <%= form.text_field :location, class: "mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm", placeholder: "住所を入力" %>
+    </div>
+
+    <div>
+      <%= form.label :image, "施設画像", class: "block text-sm font-medium text-gray-700" %>
+      <%= form.file_field :image, class: "mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" %>
+    </div>
+
+    <div class="flex justify-between items-center">
+      <%= form.submit "保存", class: "w-32 py-2 px-4 bg-orange-500 text-white rounded-lg hover:bg-orange-600 focus:ring-2 focus:ring-offset-2 focus:ring-orange-400" %>
+      <%= link_to "キャンセル", facilities_path, class: "w-32 py-2 px-4 text-center bg-gray-300 text-gray-700 rounded-lg hover:bg-gray-400 focus:ring-2 focus:ring-offset-2 focus:ring-gray-200" %>
+    </div>
+  <% end %>
+</div>

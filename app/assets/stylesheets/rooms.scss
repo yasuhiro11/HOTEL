@@ -1,0 +1,84 @@
+// Place all the styles related to the Rooms controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: https://sass-lang.com/
+
+.search-header {
+  text-align: center;
+  margin-bottom: 30px;
+
+  h1 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+  }
+
+  .search-form {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 20px;
+
+    input {
+      padding: 10px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+
+    button {
+      padding: 10px 20px;
+      background-color: #f77;
+      color: white;
+      border: none;
+      border-radius: 5px;
+    }
+  }
+}
+
+.room-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* 自動的に列数を調整 */
+  gap: 20px; /* カード間のスペース */
+  padding: 20px; /* 内側スペース */
+}
+
+.room-card {
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  padding: 15px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+
+  .room-image {
+    max-width: 100%;
+    border-radius: 5px;
+  }
+
+  h3 {
+    font-size: 1.2rem;
+    margin: 10px 0;
+  }
+
+  p {
+    margin: 5px 0;
+  }
+
+  .btn-detail {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #007BFF;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+  }
+}
+
+/* レスポンシブ対応 */
+@media (max-width: 1024px) {
+  .room-list {
+    grid-template-columns: repeat(2, 1fr); /* タブレットで2列表示 */
+  }
+}
+
+@media (max-width: 768px) {
+  .room-list {
+    grid-template-columns: 1fr; /* スマートフォンで1列表示 */
+  }
+}

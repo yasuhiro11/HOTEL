@@ -12,4 +12,444 @@
  *
  *= require_tree .
  *= require_self
+ *= require registrations
+/*
+ *= require flatpickr
  */
+/* ヘッダー全体のスタイル */
+ header {
+  background-color: #004080;
+  color: white;
+  padding: 20px 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+}
+
+/* ログイン/新規登録リンク */
+header .auth-links {
+  margin-left: auto; /* 右端に寄せる */
+  display: flex;
+  gap: 15px;
+}
+header .auth-links a,
+header .logout-link {
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+header .auth-links a:hover,
+header .logout-link:hover {
+  text-decoration: underline;
+}
+
+/* ログイン状態のユーザー情報 */
+header .user-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-left: auto; /* 右端に寄せる */
+}
+
+header .user-info .avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+header .user-info .dropdown {
+  position: relative;
+}
+
+header .user-info .user-name {
+  font-weight: bold;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px; /* ユーザー名と矢印の間隔 */
+}
+
+header .user-info .dropdown-arrow {
+  display: inline-block;
+  width: 0;
+  height: 0;
+  margin-left: 5px;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-top: 5px solid rgb(38, 45, 231); /* 矢印の色 */
+}
+
+header .user-info .dropdown-menu {
+  display: none;
+  position: absolute;
+  top: calc(100% + 5px);
+  right: 0;
+  background: white;
+  color: black;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
+  z-index: 1000;
+  min-width: 150px;
+}
+
+header .user-info .dropdown-menu.show {
+  display: block;
+}
+
+header .user-info .dropdown-menu a {
+  display: block;
+  padding: 10px 15px;
+  text-decoration: none;
+  color: #333;
+}
+
+header .user-info .dropdown-menu a:hover {
+  background-color: #f0f0f0;
+}
+
+/* レスポンシブ対応 */
+@media (max-width: 768px) {
+  header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+}
+
+.room-detail {
+  padding: 20px;
+}
+
+.back-link {
+  display: inline-block;
+  margin-bottom: 10px;
+  color: #007bff;
+  text-decoration: none;
+}
+
+.room-header {
+  text-align: left;
+  margin-bottom: 20px;
+}
+
+.room-name {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.room-address {
+  font-size: 16px;
+  color: #666;
+}
+
+.room-price {
+  font-size: 20px;
+  color: #e74c3c;
+  font-weight: bold;
+}
+
+.room-content {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 30px;
+}
+
+.room-image {
+  max-width: 50%;
+  margin-right: 20px;
+}
+
+.room-description {
+  flex: 1;
+  font-size: 14px;
+  color: #333;
+}
+
+.reservation-form {
+  background: #fdf6ec;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 5px;
+  font-size: 14px;
+}
+
+.form-control {
+  width: 100%;
+  padding: 8px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.btn-primary {
+  background-color: #e74c3c;
+  color: #fff;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+/* 予約内容の確認 */
+.reservation-summary {
+  max-width: 600px;
+  margin: 0 auto;
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+
+.table th,
+.table td {
+  padding: 12px 15px;
+  border-bottom: 1px solid #ddd;
+}
+
+.table th {
+  background-color: gray;
+  font-weight: 600;
+}
+
+.table td {
+  background-color: #fcfcfc;
+  text-align: right;
+}
+
+.btn-primary {
+  background-color: #ff6b6b;
+  border: none;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.btn-primary:hover {
+  background-color: #ff5252;
+}
+
+.btn-secondary {
+  display: block;
+  margin-top: 15px;
+  color: #007bff;
+  text-decoration: none;
+  text-align: center;
+}
+
+.btn-secondary:hover {
+  text-decoration: underline;
+}
+/* 予約一覧 */
+body {
+  font-family: Arial, sans-serif;
+  line-height: 1.6;
+  background-color: #f4f4f9;
+  color: #333;
+  margin: 0;
+  padding: 0;
+}
+
+h1 {
+  text-align: center;
+  margin: 20px 0;
+  font-size: 24px;
+  font-weight: bold;
+  color: #004080; /* トップの青色に合わせる */
+}
+
+/* テーブルのスタイル */
+table {
+  width: 100%;
+  margin: 0 auto;
+  border-collapse: collapse;
+  background-color: #fff;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* テーブルの影 */
+}
+
+th, td {
+  padding: 10px;
+  text-align: center;
+  border-bottom: 1px solid #ddd;
+  white-space: nowrap;
+}
+
+th:nth-child(3), td:nth-child(3) {
+  width: 30%; /* 紹介文の列に広めの幅を設定 */
+  text-align: left;
+  white-space: normal; /* 紹介文は折り返しを許可 */
+}
+
+th:nth-child(8), td:nth-child(8) {
+  width: 10%; /* 操作列の幅を固定 */
+}
+
+th {
+  background-color: #004080; /* ヘッダー背景色 */
+  color: white;
+  font-weight: bold;
+  text-align: center;
+}
+
+td {
+  font-size: 14px;
+  text-align: center;
+}
+
+td img {
+  width: 100px;
+  height: auto;
+  border-radius: 5px;
+}
+
+tr:hover {
+  background-color: #f1f1f1; /* 行をホバーした時の背景 */
+}
+
+/* ボタンのスタイル */
+.btn-danger {
+  background-color: #dc3545;
+  color: #fff;
+  border: none;
+  padding: 8px 16px;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: background-color 0.2s ease;
+}
+
+.btn-danger:hover {
+  background-color: #c82333;
+}
+
+/* フッターのスタイル */
+.footer {
+  text-align: center;
+  padding: 15px 0;
+  background-color: #343a40;
+  color: #fff;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  font-size: 14px;
+  box-shadow: 0 -2px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* レスポンシブ対応 */
+@media (max-width: 768px) {
+  table {
+    width: 100%;
+    font-size: 12px;
+  }
+
+  th, td {
+    padding: 10px;
+  }
+
+  td img {
+    width: 80px;
+  }
+}
+/*施設の新規登録*/
+/* 各フィールドのラベル */
+form .field label {
+  display: block;
+  font-size: 14px;
+  font-weight: bold;
+  color: #555;
+  margin-bottom: 8px;
+}
+
+/* 入力フィールド */
+form .field input,
+form .field textarea,
+form .field select {
+  width: 100%;
+  padding: 10px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-sizing: border-box;
+  margin-bottom: 20px;
+}
+
+/* テキストエリアのスタイル */
+form .field textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+/* エラー表示 */
+#error_explanation {
+  background-color: #f8d7da;
+  color: #721c24;
+  border: 1px solid #f5c6cb;
+  border-radius: 5px;
+  padding: 10px;
+  margin-bottom: 20px;
+}
+
+/* 登録ボタン */
+form .actions input[type="submit"] {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  font-weight: bold;
+  color: white;
+  background-color: #ff7f50;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+form .actions input[type="submit"]:hover {
+  background-color: #e67345;
+}
+
+/* 必須フィールドのスタイル */
+.field label::after {
+  content: " *";
+  color: red;
+}
+
+/* キャンセルボタン */
+.cancel-button {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  text-align: center;
+  color: #555;
+  background-color: #f0f0f0;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  text-decoration: none;
+  margin-top: 10px;
+}
+
+.cancel-button:hover {
+  background-color: #e0e0e0;
+}

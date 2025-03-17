@@ -2,15 +2,84 @@
 <html>
   <head>
     <title>Hotel</title>
-    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
-
-    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-    <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_pack_tag 'application', 'data-turbo-track': 'reload' %>
+    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbo-track': 'reload' %>
   </head>
 
   <body>
+    <header>
+      <% if user_signed_in? %>
+        <!-- ログイン状態 -->
+        <div class="user-info">
+          <% if current_user.avatar.attached? %>
+            <%= image_tag current_user.avatar, alt: "プロフィール画像", class: "avatar" %>
+          <% else %>
+            <%= image_tag 'default_avatar.png', alt: "デフォルトプロフィール画像", class: "avatar" %>
+          <% end %>
+
+          <div class="dropdown">
+            <span class="user-name" id="user-dropdown-toggle">
+              <%= current_user.name %>
+              <span class="dropdown-arrow">▼</span> <!-- 矢印アイコンを追加 -->
+          </span>
+            <div class="dropdown-menu" id="user-dropdown">
+              <%= link_to "施設の新規登録", new_facility_path, class: "dropdown-item" %>
+              <%= link_to "予約済み一覧", reservations_path, class: "dropdown-item" %>
+              <%= link_to "登録済み一覧", registered_facilities_path, class: "dropdown-item" %>
+              <%= link_to "アカウント設定", edit_user_path(current_user), class: "dropdown-item" %>
+              <%= link_to "ログアウト", destroy_user_session_path, method: :delete, data: { turbo: false }, class: "dropdown-item" %>
+            </div>
+          </div>
+                    
+                  </div>
+                <% else %>
+                  <!-- ログアウト状態 -->
+                  <div class="auth-links">
+                    <%= link_to "ログイン", new_user_session_path, class: "login-link" %>
+                    <%= link_to "新規登録", new_user_registration_path, class: "signup-link" %>
+                  </div>
+        <% end %>
+      </header>
+
+      <!-- フラッシュメッセージ -->
+      <% flash.each do |key, message| %>
+        <% alert_class = case key.to_sym
+                        when :notice then "success"
+                        when :alert, :error then "danger"
+                        else "info"
+                        end %>
+        <div class="alert alert-<%= alert_class %>">
+          <%= message %>
+        </div>
+      <% end %>
+
     <%= yield %>
+
+    <!-- JavaScript for dropdown -->
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const dropdownToggle = document.getElementById('user-dropdown-toggle');
+      const dropdownMenu = document.getElementById('user-dropdown');
+    
+      if (dropdownToggle) {
+        // ドロップダウンの開閉処理
+        dropdownToggle.addEventListener('click', (event) => {
+          event.stopPropagation(); // イベントのバブリングを防止
+          dropdownMenu.classList.toggle('show');
+        });
+    
+        // ドロップダウン外をクリックしたときに閉じる処理
+        document.addEventListener('click', () => {
+          if (dropdownMenu.classList.contains('show')) {
+            dropdownMenu.classList.remove('show');
+          }
+        });
+      }
+    });
+    </script>
+     <%= javascript_pack_tag 'application', 'data-turbo-track': 'reload' %>
   </body>
 </html>

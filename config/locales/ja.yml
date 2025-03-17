@@ -1,0 +1,11 @@
+ja:
+  time:
+    formats:
+      default: "%Y年%m月%d日 %H時%M分"
+      short: "%m/%d %H:%M"
+      long: "%Y年%m月%d日 %A %H時%M分"
+
+  devise:
+    sessions:
+      user:
+        signed_in: "ログインしました"

@@ -1,0 +1,57 @@
+<div class="settings-container">
+  <h1>設定</h1>
+  <div class="settings-content">
+    <div class="settings-menu">
+      <!-- メニューの内容は省略 -->
+    </div>
+    <div class="settings-details">
+      <h2>プロフィール</h2>
+      <div class="profile-info">
+        <div class="profile-item">
+          <span>アイコン画像</span>
+          <div class="icon-image">
+            <% if current_user.avatar.attached? %>
+              <%= image_tag current_user.avatar, alt: 'アイコン画像', class: 'user-avatar' %>
+            <% else %>
+              <%= image_tag 'default_avatar.png', alt: 'デフォルトアイコン画像', class: 'user-avatar' %>
+            <% end %>
+          </div>
+        </div>
+      </div>
+
+      <!-- 更新フォーム -->
+      <%= form_with(model: current_user, url: user_path(current_user), method: :patch, local: true) do |f| %>
+        <div class="form-group">
+          <%= f.label :name, "名前" %>
+          <%= f.text_field :name, class: "form-control", value: current_user.name %>
+        </div>
+        <div class="form-group">
+          <%= f.label :introduction, "自己紹介" %>
+          <%= f.text_area :introduction, class: "form-control", value: current_user.introduction %>
+        </div>
+        <div class="form-group">
+          <%= f.label :avatar, "アイコン画像" %>
+          <%= f.file_field :avatar, class: "form-control" %>
+        </div>
+        <%= f.submit "更新", class: "btn btn-primary" %>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+<style>
+  .user-avatar {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 50%;
+  }
+</style>
+
+<script>
+  document.getElementById('edit-profile').addEventListener('click', function(event) {
+    event.preventDefault();
+    const form = document.getElementById('edit-profile-form');
+    form.style.display = form.style.display === 'none' ? 'block' : 'none';
+  });
+</script>
